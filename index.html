@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuroDesk AI — Productivity Dashboard</title>
+ 
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+ 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+ 
+  <!-- Typed.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.1.0/typed.umd.js"></script>
+ 
+  <!-- Particles.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
+ 
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+ 
+  <!-- ═══════════════════════════════════════════════════
+       PARTICLES BACKGROUND
+  ═══════════════════════════════════════════════════ -->
+  <div id="particles-js"></div>
+ 
+  <!-- ═══════════════════════════════════════════════════
+       SIDEBAR
+  ═══════════════════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">
+        <i class="fa-solid fa-brain"></i>
+      </div>
+      <span class="logo-text">NeuroDesk<em>AI</em></span>
+    </div>
+ 
+    <nav class="sidebar-nav">
+      <a href="#dashboard"   class="nav-item active" data-section="dashboard">
+        <i class="fa-solid fa-chart-network"></i>
+        <span>Dashboard</span>
+        <div class="nav-glow"></div>
+      </a>
+      <a href="#ai-notes"   class="nav-item" data-section="ai-notes">
+        <i class="fa-solid fa-microchip-ai"></i>
+        <span>AI Notes</span>
+        <div class="nav-glow"></div>
+      </a>
+      <a href="#tasks"      class="nav-item" data-section="tasks">
+        <i class="fa-solid fa-list-check"></i>
+        <span>Tasks</span>
+        <div class="nav-glow"></div>
+      </a>
+      <a href="#pomodoro"   class="nav-item" data-section="pomodoro">
+        <i class="fa-solid fa-hourglass-half"></i>
+        <span>Pomodoro</span>
+        <div class="nav-glow"></div>
+      </a>
+      <a href="#settings"   class="nav-item" data-section="settings">
+        <i class="fa-solid fa-sliders"></i>
+        <span>Settings</span>
+        <div class="nav-glow"></div>
+      </a>
+    </nav>
+ 
+    <div class="sidebar-footer">
+      <div class="user-badge">
+        <div class="user-avatar">
+          <i class="fa-solid fa-user-astronaut"></i>
+        </div>
+        <div class="user-info">
+          <span class="user-name">Neural User</span>
+          <span class="user-status"><span class="dot"></span> Online</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+ 
+  <!-- Mobile Toggle -->
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Sidebar">
+    <i class="fa-solid fa-bars-staggered"></i>
+  </button>
+ 
+  <!-- ═══════════════════════════════════════════════════
+       MAIN CONTENT
+  ═══════════════════════════════════════════════════ -->
+  <main class="main-content" id="mainContent">
+ 
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="breadcrumb">
+          <span class="breadcrumb-icon"><i class="fa-solid fa-location-crosshairs"></i></span>
+          <span id="currentSection">Dashboard</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <!-- Voice Input -->
+        <button class="icon-btn" id="voiceBtn" title="Voice Input">
+          <i class="fa-solid fa-microphone"></i>
+          <div class="btn-pulse"></div>
+        </button>
+        <!-- Theme Toggle -->
+        <button class="icon-btn" id="themeToggle" title="Toggle Theme">
+          <i class="fa-solid fa-sun" id="themeIcon"></i>
+        </button>
+        <!-- Notifications -->
+        <button class="icon-btn notif-btn" title="Notifications">
+          <i class="fa-solid fa-bell"></i>
+          <span class="badge">3</span>
+        </button>
+      </div>
+    </header>
+ 
+    <!-- Voice Input Banner -->
+    <div class="voice-banner" id="voiceBanner">
+      <i class="fa-solid fa-waveform-lines"></i>
+      <span id="voiceText">Listening… speak now</span>
+      <button id="stopVoice"><i class="fa-solid fa-stop"></i></button>
+    </div>
+ 
+    <!-- ─────────────────────────────────────────────
+         SECTION: DASHBOARD
+    ───────────────────────────────────────────── -->
+    <section class="section active" id="section-dashboard">
+ 
+      <!-- Hero -->
+      <div class="hero">
+        <div class="hero-tag"><i class="fa-solid fa-microchip"></i> AI-Powered Workspace</div>
+        <h1 class="hero-title">
+          Elevate Your<br />
+          <span class="gradient-text">Neural Workflow</span>
+        </h1>
+        <p class="hero-sub">
+          <span id="typed-output"></span>
+        </p>
+        <div class="hero-cta">
+          <button class="btn-primary" onclick="scrollToSection('ai-notes')">
+            <i class="fa-solid fa-bolt"></i> Start Generating
+          </button>
+          <button class="btn-ghost" onclick="scrollToSection('tasks')">
+            <i class="fa-solid fa-list-check"></i> View Tasks
+          </button>
+        </div>
+        <div class="hero-badge-row">
+          <span class="hero-badge"><i class="fa-solid fa-shield-halved"></i> Secure</span>
+          <span class="hero-badge"><i class="fa-solid fa-cloud-bolt"></i> Offline-Ready</span>
+          <span class="hero-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> AI-Powered</span>
+        </div>
+      </div>
+ 
+      <!-- Stat Cards -->
+      <div class="stats-grid">
+        <div class="stat-card" data-color="blue">
+          <div class="stat-icon"><i class="fa-solid fa-list-check"></i></div>
+          <div class="stat-body">
+            <div class="stat-num" id="statTasks">0</div>
+            <div class="stat-label">Total Tasks</div>
+          </div>
+          <div class="stat-chart">
+            <div class="sparkbar" style="--h:40%"></div>
+            <div class="sparkbar" style="--h:65%"></div>
+            <div class="sparkbar" style="--h:50%"></div>
+            <div class="sparkbar" style="--h:80%"></div>
+            <div class="sparkbar" style="--h:60%"></div>
+          </div>
+        </div>
+ 
+        <div class="stat-card" data-color="purple">
+          <div class="stat-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <div class="stat-body">
+            <div class="stat-num" id="statFocus">0<small>m</small></div>
+            <div class="stat-label">Focus Time</div>
+          </div>
+          <div class="stat-chart">
+            <div class="sparkbar" style="--h:55%"></div>
+            <div class="sparkbar" style="--h:70%"></div>
+            <div class="sparkbar" style="--h:45%"></div>
+            <div class="sparkbar" style="--h:90%"></div>
+            <div class="sparkbar" style="--h:75%"></div>
+          </div>
+        </div>
+ 
+        <div class="stat-card" data-color="green">
+          <div class="stat-icon"><i class="fa-solid fa-chart-line"></i></div>
+          <div class="stat-body">
+            <div class="stat-num" id="statScore">0<small>%</small></div>
+            <div class="stat-label">Productivity Score</div>
+          </div>
+          <div class="stat-chart">
+            <div class="sparkbar" style="--h:30%"></div>
+            <div class="sparkbar" style="--h:55%"></div>
+            <div class="sparkbar" style="--h:70%"></div>
+            <div class="sparkbar" style="--h:60%"></div>
+            <div class="sparkbar" style="--h:85%"></div>
+          </div>
+        </div>
+ 
+        <div class="stat-card" data-color="cyan">
+          <div class="stat-icon"><i class="fa-solid fa-lightbulb"></i></div>
+          <div class="stat-body">
+            <div class="stat-num" id="statSuggestions">12</div>
+            <div class="stat-label">AI Suggestions</div>
+          </div>
+          <div class="stat-chart">
+            <div class="sparkbar" style="--h:80%"></div>
+            <div class="sparkbar" style="--h:60%"></div>
+            <div class="sparkbar" style="--h:75%"></div>
+            <div class="sparkbar" style="--h:50%"></div>
+            <div class="sparkbar" style="--h:95%"></div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Motivational Quote -->
+      <div class="quote-widget glass-card">
+        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+        <blockquote id="quoteText">Loading…</blockquote>
+        <cite id="quoteAuthor">—</cite>
+        <button class="btn-ghost-sm" onclick="newQuote()">
+          <i class="fa-solid fa-arrows-rotate"></i> New Quote
+        </button>
+      </div>
+ 
+    </section>
+ 
+    <!-- ─────────────────────────────────────────────
+         SECTION: AI NOTES
+    ───────────────────────────────────────────── -->
+    <section class="section" id="section-ai-notes">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-microchip-ai"></i> AI Notes Generator</h2>
+        <p>Enter a topic and let the AI synthesize key insights</p>
+      </div>
+ 
+      <div class="ai-notes-panel glass-card">
+        <div class="notes-input-row">
+          <div class="input-wrapper">
+            <i class="fa-solid fa-terminal input-icon"></i>
+            <input type="text" id="notesTopic" placeholder="Enter topic… e.g. Machine Learning, Quantum Computing" />
+          </div>
+          <button class="btn-primary" id="generateBtn" onclick="generateNotes()">
+            <i class="fa-solid fa-sparkles"></i> Generate
+          </button>
+        </div>
+ 
+        <div class="topic-tags">
+          <span class="tag" onclick="quickTopic('Machine Learning')">Machine Learning</span>
+          <span class="tag" onclick="quickTopic('Blockchain')">Blockchain</span>
+          <span class="tag" onclick="quickTopic('Cybersecurity')">Cybersecurity</span>
+          <span class="tag" onclick="quickTopic('Quantum Computing')">Quantum Computing</span>
+          <span class="tag" onclick="quickTopic('Neural Networks')">Neural Networks</span>
+        </div>
+ 
+        <div class="notes-output" id="notesOutput">
+          <div class="output-placeholder">
+            <i class="fa-solid fa-atom fa-spin"></i>
+            <p>Awaiting neural synthesis…</p>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ─────────────────────────────────────────────
+         SECTION: TASKS
+    ───────────────────────────────────────────── -->
+    <section class="section" id="section-tasks">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-list-check"></i> Smart Task Manager</h2>
+        <p>Track, manage, and conquer your goals</p>
+      </div>
+ 
+      <div class="tasks-panel glass-card">
+        <div class="tasks-input-row">
+          <div class="input-wrapper">
+            <i class="fa-solid fa-plus input-icon"></i>
+            <input type="text" id="taskInput" placeholder="Add a new task…" onkeydown="if(event.key==='Enter') addTask()" />
+          </div>
+          <select id="taskPriority" class="priority-select">
+            <option value="low">🟢 Low</option>
+            <option value="medium" selected>🟡 Medium</option>
+            <option value="high">🔴 High</option>
+          </select>
+          <button class="btn-primary" onclick="addTask()">
+            <i class="fa-solid fa-circle-plus"></i> Add
+          </button>
+        </div>
+ 
+        <div class="task-filters">
+          <button class="filter-btn active" data-filter="all" onclick="filterTasks('all', this)">All</button>
+          <button class="filter-btn" data-filter="active" onclick="filterTasks('active', this)">Active</button>
+          <button class="filter-btn" data-filter="completed" onclick="filterTasks('completed', this)">Completed</button>
+        </div>
+ 
+        <ul class="task-list" id="taskList">
+          <!-- Tasks injected by JS -->
+        </ul>
+ 
+        <div class="task-footer">
+          <span id="taskCount">0 tasks remaining</span>
+          <button class="btn-ghost-sm danger" onclick="clearCompleted()">
+            <i class="fa-solid fa-trash-can"></i> Clear Completed
+          </button>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ─────────────────────────────────────────────
+         SECTION: POMODORO
+    ───────────────────────────────────────────── -->
+    <section class="section" id="section-pomodoro">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-hourglass-half"></i> Pomodoro Timer</h2>
+        <p>Stay in the zone with focused work intervals</p>
+      </div>
+ 
+      <div class="pomodoro-panel glass-card">
+        <!-- Mode tabs -->
+        <div class="pomo-modes">
+          <button class="pomo-mode active" data-minutes="25" onclick="setMode(25,'Focus',this)">Focus</button>
+          <button class="pomo-mode" data-minutes="5"  onclick="setMode(5,'Short Break',this)">Short Break</button>
+          <button class="pomo-mode" data-minutes="15" onclick="setMode(15,'Long Break',this)">Long Break</button>
+        </div>
+ 
+        <!-- Circular Timer -->
+        <div class="timer-ring-wrap">
+          <svg class="timer-ring" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <circle class="ring-bg" cx="100" cy="100" r="90" />
+            <circle class="ring-progress" id="ringProgress" cx="100" cy="100" r="90"
+              stroke-dasharray="565.49"
+              stroke-dashoffset="0" />
+          </svg>
+          <div class="timer-display">
+            <div class="timer-mode-label" id="timerModeLabel">Focus</div>
+            <div class="timer-time" id="timerDisplay">25:00</div>
+            <div class="timer-session" id="sessionLabel">Session 1</div>
+          </div>
+        </div>
+ 
+        <!-- Controls -->
+        <div class="pomo-controls">
+          <button class="pomo-btn" id="startBtn" onclick="toggleTimer()">
+            <i class="fa-solid fa-play" id="playIcon"></i>
+          </button>
+          <button class="pomo-btn secondary" onclick="resetTimer()">
+            <i class="fa-solid fa-rotate-left"></i>
+          </button>
+          <button class="pomo-btn secondary" onclick="skipSession()">
+            <i class="fa-solid fa-forward-step"></i>
+          </button>
+        </div>
+ 
+        <!-- Session dots -->
+        <div class="session-dots" id="sessionDots">
+          <span class="sdot active"></span>
+          <span class="sdot"></span>
+          <span class="sdot"></span>
+          <span class="sdot"></span>
+        </div>
+ 
+        <div class="pomo-stat-row">
+          <div class="pomo-stat">
+            <span id="pomoCompleted">0</span>
+            <small>Completed</small>
+          </div>
+          <div class="pomo-stat">
+            <span id="pomoFocusTotal">0m</span>
+            <small>Focus Time</small>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ─────────────────────────────────────────────
+         SECTION: SETTINGS
+    ───────────────────────────────────────────── -->
+    <section class="section" id="section-settings">
+      <div class="section-header">
+        <h2><i class="fa-solid fa-sliders"></i> Settings</h2>
+        <p>Personalise your NeuroDesk experience</p>
+      </div>
+ 
+      <div class="settings-grid">
+        <!-- Appearance -->
+        <div class="settings-card glass-card">
+          <h3><i class="fa-solid fa-palette"></i> Appearance</h3>
+ 
+          <div class="setting-row">
+            <div>
+              <span class="setting-label">Dark Mode</span>
+              <span class="setting-sub">Cyberpunk dark theme</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="darkModeSwitch" checked onchange="applyTheme()" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+ 
+          <div class="setting-row">
+            <div>
+              <span class="setting-label">Accent Color</span>
+              <span class="setting-sub">Neon highlight color</span>
+            </div>
+            <div class="color-picker-row">
+              <span class="color-dot active" data-color="blue"   onclick="setAccent('blue',this)"   style="background:#00f3ff"></span>
+              <span class="color-dot"        data-color="purple" onclick="setAccent('purple',this)" style="background:#b400ff"></span>
+              <span class="color-dot"        data-color="green"  onclick="setAccent('green',this)"  style="background:#00ff88"></span>
+              <span class="color-dot"        data-color="pink"   onclick="setAccent('pink',this)"   style="background:#ff006e"></span>
+            </div>
+          </div>
+ 
+          <div class="setting-row">
+            <div>
+              <span class="setting-label">Particle Effects</span>
+              <span class="setting-sub">Background animation</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="particlesSwitch" checked onchange="toggleParticles()" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+ 
+        <!-- Pomodoro Settings -->
+        <div class="settings-card glass-card">
+          <h3><i class="fa-solid fa-hourglass-half"></i> Pomodoro</h3>
+ 
+          <div class="setting-row">
+            <span class="setting-label">Focus Duration</span>
+            <div class="num-input-wrap">
+              <button onclick="adjustPomo('focus',-1)">−</button>
+              <span id="settingFocus">25</span>
+              <button onclick="adjustPomo('focus',1)">+</button>
+              <small>min</small>
+            </div>
+          </div>
+ 
+          <div class="setting-row">
+            <span class="setting-label">Short Break</span>
+            <div class="num-input-wrap">
+              <button onclick="adjustPomo('short',-1)">−</button>
+              <span id="settingShort">5</span>
+              <button onclick="adjustPomo('short',1)">+</button>
+              <small>min</small>
+            </div>
+          </div>
+ 
+          <div class="setting-row">
+            <span class="setting-label">Long Break</span>
+            <div class="num-input-wrap">
+              <button onclick="adjustPomo('long',-1)">−</button>
+              <span id="settingLong">15</span>
+              <button onclick="adjustPomo('long',1)">+</button>
+              <small>min</small>
+            </div>
+          </div>
+ 
+          <div class="setting-row">
+            <div>
+              <span class="setting-label">Sound Alerts</span>
+              <span class="setting-sub">Audio notification on complete</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="soundSwitch" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+ 
+        <!-- About -->
+        <div class="settings-card glass-card about-card">
+          <h3><i class="fa-solid fa-brain"></i> About NeuroDesk AI</h3>
+          <p>A next-generation AI productivity workspace powered by intelligent automation and cyberpunk aesthetics.</p>
+          <div class="about-badges">
+            <span>v2.0.0</span>
+            <span>HTML · CSS · JS</span>
+            <span>No Backend</span>
+          </div>
+          <button class="btn-primary full" onclick="clearAllData()">
+            <i class="fa-solid fa-trash"></i> Reset All Data
+          </button>
+        </div>
+      </div>
+    </section>
+ 
+  </main>
+ 
+  <!-- ═══════════════════════════════════════════════════
+       TOAST NOTIFICATION
+  ═══════════════════════════════════════════════════ -->
+  <div class="toast" id="toast"></div>
+ 
+  <script src="script.js"></script>
+</body>
+</html>
